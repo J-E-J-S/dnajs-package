@@ -27,4 +27,7 @@ class Seq{
         return comp
     };
 
+    transcribe(){
+        return this.seq.replace(/T/g, 'U');
+    }
 }
