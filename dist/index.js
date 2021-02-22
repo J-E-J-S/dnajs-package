@@ -45,6 +45,12 @@ class Seq{
 
         const reverse = complement.split('').reverse().join(''); // String reversal in js
         return reverse;
+    };
 
+    gc_content(){
+        const gc = this.seq.match(/[GC]/g || []).length; // Count all GC bases
+        const content = (gc / this.seq.length) * 100;
+
+        return content
     };
 }
