@@ -29,5 +29,22 @@ class Seq{
 
     transcribe(){
         return this.seq.replace(/T/g, 'U');
-    }
+    };
+
+    reverse_complement(){
+
+        const bases = 'AGCT';
+        const mirror_bases = 'TCGA';
+
+        let complement = ''; // Holds growing complement strand
+        // Go through input seq and match to complement base
+        for(let i=0; i < this.seq.length; i++){
+            let base_index = bases.indexOf(this.seq[i]); // Find index in bases of input base
+            complement += mirror_bases[base_index]; // Add the mirrored base to growing string
+        };
+
+        const reverse = complement.split('').reverse().join(''); // String reversal in js
+        return reverse;
+
+    };
 }
