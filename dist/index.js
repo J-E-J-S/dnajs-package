@@ -1,7 +1,7 @@
 class Seq{
     constructor(sequence){
         this.seq = sequence.toUpperCase();
-        if(this.seq.match('[^CATG]')){
+        if(this.seq.match('[^CATGU]')){
             throw new Error('Sequence is contaminated.')
         };
     };
@@ -33,8 +33,8 @@ class Seq{
 
     reverse_complement(){
 
-        const bases = 'AGCT';
-        const mirror_bases = 'TCGA';
+        const bases = 'AGCTU';
+        const mirror_bases = 'TCGAA';
 
         let complement = ''; // Holds growing complement strand
         // Go through input seq and match to complement base
@@ -52,5 +52,33 @@ class Seq{
         const content = (gc / this.seq.length) * 100;
 
         return content
+    };
+
+    translate(){
+        // Generate list of all codons
+        const bases = 'UCAG';
+        let codons = [];
+        for(let a=0; a < bases.length; a++){
+            for(let b=0; b < bases.length; b++){
+                for(let c=0; c < bases.length; c++){
+                    let codon = bases[a] + bases[b] + bases[c];
+                    codons.push(codon);
+                };
+            };
+        };
+        const amino_acids = 'FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG';
+
+        // Translate
+        let protein = '';
+        for(let pos=0; pos < (this.seq.length); pos += 3 ){
+            let codon = this.seq.slice(pos, pos+3);
+            let residue = amino_acids[codons.indexOf(codon)];
+            if(residue === undefined){
+                protein += '-';
+            } else{
+                protein += residue;
+            }
+        }
+        return protein;
     };
 }
